@@ -1,4 +1,4 @@
-package io.github.examplemod.proxy;
+package gkappa.cta.proxy;
 
 import javax.annotation.Nullable;
 

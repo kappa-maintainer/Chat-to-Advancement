@@ -1,4 +1,4 @@
-package io.github.examplemod;
+package gkappa.cta;
 
 public class Reference {
 	
