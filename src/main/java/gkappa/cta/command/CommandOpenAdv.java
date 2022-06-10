@@ -6,19 +6,17 @@ import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.advancements.GuiScreenAdvancements;
 import net.minecraft.client.gui.toasts.AdvancementToast;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
+import net.minecraft.command.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CommandOpenAdv implements ICommand {
+public class CommandOpenAdv extends CommandBase {
     @Nonnull
     @Override
     public String getName() {
@@ -31,26 +29,31 @@ public class CommandOpenAdv implements ICommand {
         return "/openadv";
     }
 
-
+    @Override
+    public int getRequiredPermissionLevel()
+    {
+        return 0;
+    }
+    @Nonnull
     @Override
     public List<String> getAliases() {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        if (args.length != 2) {
+        if (args.length != 1) {
             throw new WrongUsageException("commands.advancement.usage");
         }
         Minecraft mc = Minecraft.getMinecraft();
         GuiScreenAdvancements sa = new GuiScreenAdvancements(mc.player.connection.getAdvancementManager());
-        sa.setSelectedTab(server.getAdvancementManager().getAdvancement(new ResourceLocation(args[1])));
+        sa.setSelectedTab(server.getAdvancementManager().getAdvancement(new ResourceLocation(args[0])));
         mc.displayGuiScreen(sa);
     }
 
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-        return false;
+        return super.checkPermission(server, sender);
     }
 
     @Override
