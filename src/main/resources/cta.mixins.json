@@ -5,8 +5,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "mixins.cta.refmap.json",
   "target": "@env(DEFAULT)",
-
   "setSourceFile": true,
-  "minVersion": "0.8"
-
+  "minVersion": "0.8",
+  "mixins": [
+    "MixinPlayerAdvancements"
+  ]
 }

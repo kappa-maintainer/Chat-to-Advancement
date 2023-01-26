@@ -7,6 +7,8 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(
         modid = Reference.MOD_ID,
@@ -16,6 +18,7 @@ import net.minecraftforge.fml.common.event.*;
         dependencies = Reference.MOD_DEPENDENCIES
 )
 public class Chat2Adv {
+    public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
     @SidedProxy(clientSide = "gkappa.cta.proxy.ClientProxy", serverSide = "gkappa.cta.proxy.CommonProxy")
     public static IProxy proxy;
@@ -27,6 +30,7 @@ public class Chat2Adv {
     @EventHandler
     public static void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
+
     }
 
     @EventHandler

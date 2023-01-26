@@ -28,12 +28,15 @@ group = mod_base_package
 archivesBaseName = mod_id
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
-
+mixin {
+    add sourceSets.main, "mixins.cta.refmap.json"
+    disableAnnotationProcessorCheck()
+}
 minecraft {
 
     mappings channel: mappings_channel, version: mappings_version
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -70,11 +73,14 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url = 'https://sizableshrimp.me/maven' }
     maven { url = 'https://repo.spongepowered.org/maven' }
+    maven { url = 'https://maven.cleanroommc.com' }
+
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
+
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")/*
     compileOnly("org.spongepowered:mixin:0.8.5") {
         exclude module: "asm-commons"
         exclude module: "asm-tree"
@@ -83,7 +89,10 @@ dependencies {
         exclude module: "log4j-core"
         exclude module: "gson"
         exclude module: "commons-io"
-    }
+    }*/
+
+    compileOnly "zone.rong:mixinbooter:7.0"
+
 }
 
 fancyGradle {
@@ -121,6 +130,8 @@ processResources {
     }
 }
 
+
+
 def modFileTokens = [VERSION: mod_version]
 def included = ["${mod_base_package.replace('.', '/')}/${mod_main_class}.java".toString()]
 
@@ -157,17 +168,15 @@ jar {
                 //'FMLCorePluginContainsFMLMod': 'true',
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'FMLCorePlugin': 'gkappa.cta.CTALoadingPlugin',
-                'ForceLoadAsMod': 'true'
+                'ForceLoadAsMod': true,
+                'FMLCorePluginContainsFMLMod': true
         ])
     }
 }
 
 jar.finalizedBy('reobfJar')
 
-mixin {
-    add sourceSets.main, "mixins.cta.refmap.json"
-    disableAnnotationProcessorCheck()
-}
+
 
 publishing {
     publications {
