@@ -26,7 +26,7 @@ public class MixinPlayerAdvancements {
     @Redirect(method = "grantCriterion", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancements/Advancement;getDisplayText()Lnet/minecraft/util/text/ITextComponent;"))
     private ITextComponent appendStyle(Advancement instance) {
         ITextComponent adv = instance.getDisplayText();
-        return adv.setStyle(adv.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/locateadv " + adv.getUnformattedText())));
+        return adv.setStyle(adv.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/locateadv " + instance.getId())));
     }
 
 }

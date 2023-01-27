@@ -67,29 +67,34 @@ public class CommandLocateAdv extends CommandBase {
         }
         else if(opening == 2)
         {
+
+            opening = 0;
             Minecraft mc = Minecraft.getMinecraft();
             GuiScreenAdvancements gsa = new GuiScreenAdvancements(mc.player.connection.getAdvancementManager());
 
             mc.displayGuiScreen(gsa);
             ResourceLocation advid = new ResourceLocation(args[0]);
             AdvancementManager manager = server.getAdvancementManager();
-            Advancement adv = manager.getAdvancement(advid);
 
-            Advancement icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "root"));
+
+            Advancement icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "/root"));
 
             if(icon == null) {
                 icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), "root"));
 
                 if(icon == null) {
-                    icon = adv;
+                    icon = manager.getAdvancement(advid);
+
+                    if(icon == null) {
+                        return;
+                    }
                 }
             }
 
-            assert icon != null;
-            if(gsa.getAdvancementGui(icon)!=null)
+            if(gsa.getAdvancementGui(icon) != null)
                 gsa.setSelectedTab(icon);
 
-            opening = 0;
+
         }
     }
 
