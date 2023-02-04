@@ -36,7 +36,7 @@ minecraft {
 
     mappings channel: mappings_channel, version: mappings_version
 
-    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/cta_at.cfg')
 
     runs {
         client {
@@ -169,7 +169,8 @@ jar {
                 'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
                 'FMLCorePlugin': 'gkappa.cta.CTALoadingPlugin',
                 'ForceLoadAsMod': true,
-                'FMLCorePluginContainsFMLMod': true
+                'FMLCorePluginContainsFMLMod': true,
+                'FMLAT': "cta_at.cfg"
         ])
     }
 }

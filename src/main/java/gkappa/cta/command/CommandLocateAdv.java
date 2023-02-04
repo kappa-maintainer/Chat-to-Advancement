@@ -2,9 +2,12 @@ package gkappa.cta.command;
 
 import com.google.common.collect.Lists;
 import gkappa.cta.Chat2Adv;
+import gkappa.cta.IKeepHover;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.advancements.GuiAdvancement;
+import net.minecraft.client.gui.advancements.GuiAdvancementTab;
 import net.minecraft.client.gui.advancements.GuiScreenAdvancements;
 import net.minecraft.command.*;
 import net.minecraft.server.MinecraftServer;
@@ -91,8 +94,16 @@ public class CommandLocateAdv extends CommandBase {
                 }
             }
 
-            if(gsa.getAdvancementGui(icon) != null)
+            if(gsa.getAdvancementGui(icon) != null) {
                 gsa.setSelectedTab(icon);
+                GuiAdvancementTab gat = gsa.selectedTab;
+                GuiAdvancement ga = gsa.getAdvancementGui(manager.getAdvancement(new ResourceLocation(args[0])));
+                gat.drawContents();// make it centered
+                gat.scroll(-ga.getX() - gat.scrollX + 117 + 13,  -ga.getY() - gat.scrollY + 56 + 13);
+                ((IKeepHover)gat).toggleStay(ga);
+
+
+            }
 
 
         }

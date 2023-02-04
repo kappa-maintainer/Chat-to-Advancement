@@ -9,5 +9,8 @@
   "minVersion": "0.8",
   "mixins": [
     "MixinPlayerAdvancements"
+  ],
+  "client": [
+    "MixinGuiAdvancementTab"
   ]
 }
