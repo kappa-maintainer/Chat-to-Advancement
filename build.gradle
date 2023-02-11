@@ -74,13 +74,19 @@ repositories {
     maven { url = 'https://sizableshrimp.me/maven' }
     maven { url = 'https://repo.spongepowered.org/maven' }
     maven { url = 'https://maven.cleanroommc.com' }
-
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")/*
+    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
+    /*
     compileOnly("org.spongepowered:mixin:0.8.5") {
         exclude module: "asm-commons"
         exclude module: "asm-tree"
@@ -89,10 +95,11 @@ dependencies {
         exclude module: "log4j-core"
         exclude module: "gson"
         exclude module: "commons-io"
-    }*/
+    }
+    */
 
     compileOnly "zone.rong:mixinbooter:7.0"
-
+    compileOnly fg.deobf("curse.maven:ba-272515:2685984")
 }
 
 fancyGradle {

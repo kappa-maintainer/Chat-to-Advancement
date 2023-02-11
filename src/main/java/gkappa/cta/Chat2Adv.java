@@ -2,6 +2,7 @@ package gkappa.cta;
 
 
 import gkappa.cta.proxy.IProxy;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -19,7 +20,7 @@ import org.apache.logging.log4j.Logger;
 )
 public class Chat2Adv {
     public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
-
+    public static GuiScreen baGui = null;
     @SidedProxy(clientSide = "gkappa.cta.proxy.ClientProxy", serverSide = "gkappa.cta.proxy.CommonProxy")
     public static IProxy proxy;
 

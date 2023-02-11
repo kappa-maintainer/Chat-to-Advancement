@@ -1,14 +1,16 @@
 package gkappa.cta.command;
 
+import betteradvancements.gui.GuiBetterAdvancement;
+import betteradvancements.gui.GuiBetterAdvancementTab;
+import betteradvancements.gui.GuiScreenBetterAdvancements;
 import com.google.common.collect.Lists;
-import gkappa.cta.Chat2Adv;
-import gkappa.cta.IKeepHover;
+import gkappa.cta.IKeepHoverBA;
+import gkappa.cta.ISetCenteredAble;
+import gkappa.cta.mixin.IMixinGuiBetterAdvancementTab;
+import gkappa.cta.mixin.IMixinGuiScreenBetterAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.advancements.GuiAdvancement;
-import net.minecraft.client.gui.advancements.GuiAdvancementTab;
-import net.minecraft.client.gui.advancements.GuiScreenAdvancements;
 import net.minecraft.command.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -21,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandLocateAdv extends CommandBase {
+public class CommandLocateBAdv extends CommandBase {
 
     private static int opening = 0;
     private static MinecraftServer server = null;
@@ -54,8 +56,8 @@ public class CommandLocateAdv extends CommandBase {
         if (args.length != 1) {
             return;
         }
-        CommandLocateAdv.server = server;
-        CommandLocateAdv.args = args;
+        CommandLocateBAdv.server = server;
+        CommandLocateBAdv.args = args;
         opening = 1;
 
 
@@ -73,7 +75,7 @@ public class CommandLocateAdv extends CommandBase {
 
             opening = 0;
             Minecraft mc = Minecraft.getMinecraft();
-            GuiScreenAdvancements gsa = new GuiScreenAdvancements(mc.player.connection.getAdvancementManager());
+            GuiScreenBetterAdvancements gsa = new GuiScreenBetterAdvancements(mc.player.connection.getAdvancementManager());
 
             mc.displayGuiScreen(gsa);
             ResourceLocation advid = new ResourceLocation(args[0]);
@@ -96,12 +98,14 @@ public class CommandLocateAdv extends CommandBase {
 
             if(gsa.getAdvancementGui(icon) != null) {
                 gsa.setSelectedTab(icon);
-                GuiAdvancementTab gat = gsa.selectedTab;
+                GuiBetterAdvancementTab gat = ((IMixinGuiScreenBetterAdvancement)gsa).getSelectedTab();
                 if(gat == null) return;
-                GuiAdvancement ga = gsa.getAdvancementGui(manager.getAdvancement(new ResourceLocation(args[0])));
-                gat.drawContents();// make it centered
-                gat.scroll(-ga.getX() - gat.scrollX + 117 - 13,  -ga.getY() - gat.scrollY + 56 - 13);
-                ((IKeepHover)gat).toggleStay(ga);
+                GuiBetterAdvancement ga = gsa.getAdvancementGui(manager.getAdvancement(new ResourceLocation(args[0])));
+                ((ISetCenteredAble)gsa).setCentered();
+                gat.scroll(-ga.getX() - ((IMixinGuiBetterAdvancementTab)gat).getScrollX() + ((ISetCenteredAble) gsa).getWidth()/2 - 13,
+                        -ga.getY() - ((IMixinGuiBetterAdvancementTab) gat).getScrollY() + ((ISetCenteredAble) gsa).getHeight()/2 - 13,
+                        ((IMixinGuiScreenBetterAdvancement) gsa).getInternalWidth() - 60 - 27, ((IMixinGuiScreenBetterAdvancement) gsa).getInternalHeight() - 40 - 30 - 27);
+                ((IKeepHoverBA)gat).toggleStay(ga);
 
 
             }
@@ -146,3 +150,4 @@ public class CommandLocateAdv extends CommandBase {
         return 0;
     }
 }
+

@@ -1,0 +1,15 @@
+
+{
+  "required": false,
+  "package": "gkappa.cta.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "target": "@env(DEFAULT)",
+  "setSourceFile": true,
+  "minVersion": "0.8",
+  "client": [
+    "IMixinGuiScreenBetterAdvancement",
+    "IMixinGuiBetterAdvancementTab",
+    "MixinGuiBetterAdvancementTab",
+    "MixinGuiScreenBetterAdvancement"
+  ]
+}
