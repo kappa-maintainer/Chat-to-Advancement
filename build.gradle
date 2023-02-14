@@ -99,6 +99,7 @@ dependencies {
     */
 
     compileOnly "zone.rong:mixinbooter:7.0"
+    runtimeOnly "zone.rong:mixinbooter:7.0"
     compileOnly fg.deobf("curse.maven:ba-272515:2685984")
 }
 

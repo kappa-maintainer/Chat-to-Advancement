@@ -1,5 +1,5 @@
 [![Curse Forge](https://cf.way2muchnoise.eu/title/818503_Get_%20.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/fbp)
-[![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-14.23.5.2855-yellow.svg?style=for-the-badge)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html)
+[![Forge Version](https://img.shields.io/badge/Minecraft%20Forge-14.23.5.2860-yellow.svg?style=for-the-badge)](http://files.minecraftforge.net/maven/net/minecraftforge/forge/index_1.12.2.html)
 
 # Advancement Locator/Chat to Advancement
 
