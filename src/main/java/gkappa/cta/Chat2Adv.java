@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(
+        clientSideOnly = true,
         modid = Reference.MOD_ID,
         name = Reference.MOD_NAME,
         useMetadata = true,
