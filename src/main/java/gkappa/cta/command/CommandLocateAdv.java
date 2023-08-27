@@ -1,15 +1,16 @@
 package gkappa.cta.command;
 
 import com.google.common.collect.Lists;
-import gkappa.cta.Chat2Adv;
 import gkappa.cta.IKeepHover;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementManager;
+import net.minecraft.advancements.AdvancementList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.advancements.GuiAdvancement;
 import net.minecraft.client.gui.advancements.GuiAdvancementTab;
 import net.minecraft.client.gui.advancements.GuiScreenAdvancements;
-import net.minecraft.command.*;
+import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +25,6 @@ import java.util.List;
 public class CommandLocateAdv extends CommandBase {
 
     private static int opening = 0;
-    private static MinecraftServer server = null;
     private static String[] args;
     @Nonnull
     @Override
@@ -54,7 +54,6 @@ public class CommandLocateAdv extends CommandBase {
         if (args.length != 1) {
             return;
         }
-        CommandLocateAdv.server = server;
         CommandLocateAdv.args = args;
         opening = 1;
 
@@ -77,16 +76,16 @@ public class CommandLocateAdv extends CommandBase {
 
             mc.displayGuiScreen(gsa);
             ResourceLocation advid = new ResourceLocation(args[0]);
-            AdvancementManager manager = server.getAdvancementManager();
+            AdvancementList advList = mc.player.connection.getAdvancementManager().getAdvancementList();
 
 
-            Advancement icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "/root"));
+            Advancement icon = advList.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "/root"));
 
             if(icon == null) {
-                icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), "root"));
+                icon = advList.getAdvancement(new ResourceLocation(advid.getNamespace(), "root"));
 
                 if(icon == null) {
-                    icon = manager.getAdvancement(advid);
+                    icon = advList.getAdvancement(advid);
 
                     if(icon == null) {
                         return;
@@ -98,7 +97,7 @@ public class CommandLocateAdv extends CommandBase {
                 gsa.setSelectedTab(icon);
                 GuiAdvancementTab gat = gsa.selectedTab;
                 if(gat == null) return;
-                GuiAdvancement ga = gsa.getAdvancementGui(manager.getAdvancement(new ResourceLocation(args[0])));
+                GuiAdvancement ga = gsa.getAdvancementGui(advList.getAdvancement(new ResourceLocation(args[0])));
                 gat.drawContents();// make it centered
                 gat.scroll(-ga.getX() - gat.scrollX + 117 - 13,  -ga.getY() - gat.scrollY + 56 - 13);
                 ((IKeepHover)gat).toggleStay(ga);

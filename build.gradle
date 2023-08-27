@@ -9,13 +9,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.+', changing: true
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
     }
 }
 
 plugins {
-    id 'wtf.gofancy.fancygradle' version '1.+'
+    //id 'wtf.gofancy.fancygradle' version '1.+'
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -98,19 +98,19 @@ dependencies {
     }
     */
 
-    compileOnly "zone.rong:mixinbooter:7.0"
-    runtimeOnly "zone.rong:mixinbooter:7.0"
+    compileOnly "zone.rong:mixinbooter:8.4"
+    runtimeOnly "zone.rong:mixinbooter:8.4"
     compileOnly fg.deobf("curse.maven:ba-272515:2685984")
 }
 
-fancyGradle {
+/*fancyGradle {
     patches {
         resources
         coremods
         //codeChickenLib
         asm
     }
-}
+}*/
 
 
 def resourceTargets = ['mcmod.info', 'pack.mcmeta']

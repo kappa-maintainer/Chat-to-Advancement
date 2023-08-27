@@ -22,6 +22,12 @@ public class ClientProxy implements IProxy {
 
     @Override
     public void preInit(FMLPreInitializationEvent event) {
+
+    }
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+
         if(Loader.isModLoaded("betteradvancements")) {
             ClientCommandHandler.instance.registerCommand(new CommandLocateBAdv());
             MinecraftForge.EVENT_BUS.register(CommandLocateBAdv.class);
@@ -29,10 +35,6 @@ public class ClientProxy implements IProxy {
             ClientCommandHandler.instance.registerCommand(new CommandLocateAdv());
             MinecraftForge.EVENT_BUS.register(CommandLocateAdv.class);
         }
-    }
-
-    @Override
-    public void init(FMLInitializationEvent event) {
     }
 
     @Override

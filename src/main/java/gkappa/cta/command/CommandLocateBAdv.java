@@ -9,6 +9,7 @@ import gkappa.cta.ISetCenteredAble;
 import gkappa.cta.mixin.IMixinGuiBetterAdvancementTab;
 import gkappa.cta.mixin.IMixinGuiScreenBetterAdvancement;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementList;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.*;
@@ -26,7 +27,7 @@ import java.util.List;
 public class CommandLocateBAdv extends CommandBase {
 
     private static int opening = 0;
-    private static MinecraftServer server = null;
+
     private static String[] args;
     @Nonnull
     @Override
@@ -56,7 +57,6 @@ public class CommandLocateBAdv extends CommandBase {
         if (args.length != 1) {
             return;
         }
-        CommandLocateBAdv.server = server;
         CommandLocateBAdv.args = args;
         opening = 1;
 
@@ -79,16 +79,16 @@ public class CommandLocateBAdv extends CommandBase {
 
             mc.displayGuiScreen(gsa);
             ResourceLocation advid = new ResourceLocation(args[0]);
-            AdvancementManager manager = server.getAdvancementManager();
+            AdvancementList advList = mc.player.connection.getAdvancementManager().getAdvancementList();
 
 
-            Advancement icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "/root"));
+            Advancement icon = advList.getAdvancement(new ResourceLocation(advid.getNamespace(), advid.getPath().split("/")[0] + "/root"));
 
             if(icon == null) {
-                icon = manager.getAdvancement(new ResourceLocation(advid.getNamespace(), "root"));
+                icon = advList.getAdvancement(new ResourceLocation(advid.getNamespace(), "root"));
 
                 if(icon == null) {
-                    icon = manager.getAdvancement(advid);
+                    icon = advList.getAdvancement(advid);
 
                     if(icon == null) {
                         return;
@@ -100,7 +100,7 @@ public class CommandLocateBAdv extends CommandBase {
                 gsa.setSelectedTab(icon);
                 GuiBetterAdvancementTab gat = ((IMixinGuiScreenBetterAdvancement)gsa).getSelectedTab();
                 if(gat == null) return;
-                GuiBetterAdvancement ga = gsa.getAdvancementGui(manager.getAdvancement(new ResourceLocation(args[0])));
+                GuiBetterAdvancement ga = gsa.getAdvancementGui(advList.getAdvancement(new ResourceLocation(args[0])));
                 ((ISetCenteredAble)gsa).setCentered();
                 gat.scroll(-ga.getX() - ((IMixinGuiBetterAdvancementTab)gat).getScrollX() + ((ISetCenteredAble) gsa).getWidth()/2 - 13,
                         -ga.getY() - ((IMixinGuiBetterAdvancementTab) gat).getScrollY() + ((ISetCenteredAble) gsa).getHeight()/2 - 13,
