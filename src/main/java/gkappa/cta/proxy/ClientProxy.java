@@ -2,6 +2,7 @@ package gkappa.cta.proxy;
 
 import javax.annotation.Nullable;
 
+import gkappa.cta.command.CommandInjector;
 import gkappa.cta.command.CommandLocateAdv;
 import gkappa.cta.command.CommandLocateBAdv;
 import net.minecraft.client.Minecraft;
@@ -35,6 +36,7 @@ public class ClientProxy implements IProxy {
             ClientCommandHandler.instance.registerCommand(new CommandLocateAdv());
             MinecraftForge.EVENT_BUS.register(CommandLocateAdv.class);
         }
+        MinecraftForge.EVENT_BUS.register(CommandInjector.class);
     }
 
     @Override
